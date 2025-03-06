@@ -97,7 +97,7 @@ const generateAPIResponse = async (incomingMessageDiv) => {
 // Show a loading animation while waiting for the API response
 const showLoadingAnimation = () => {
   const html = `<div class="message-content">
-                  <img class="avatar" src="../assets/images/starty.png" alt="Gemini avatar">
+                  <img class="avatar" src="./assets/images/starty.png" alt="Gemini avatar">
                   <p class="text"></p>
                  
                 </div>
@@ -124,7 +124,7 @@ const handleOutgoingChat = () => {
   isResponseGenerating = true;
 
   const html = `<div class="message-content">
-                  <img class="avatar" src="../assets/images/profile/user-1.jpg" alt="User avatar">
+                  <img class="avatar" src="./assets/images/profile/user-1.jpg" alt="User avatar">
                   <p class="text"></p>
                 </div>`;
   const outgoingMessageDiv = createMessageElement(html, "outgoing");
