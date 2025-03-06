@@ -18,7 +18,9 @@ const loadDataFromLocalstorage = () => {
   const isLightMode = localStorage.getItem("themeColor") === "light_mode";
   // Apply the stored theme
   document.body.classList.toggle("light_mode", isLightMode);
-  toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
+  // toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
+
+  toggleThemeButton.innerText = isLightMode ? "light_mode" : "light_mode";
   // Restore saved chats or clear the chat container
   chatContainer.innerHTML = savedChats || "";
   document.body.classList.toggle("hide-header", savedChats);
@@ -140,8 +142,8 @@ const handleOutgoingChat = () => {
 // Toggle between light and dark themes
 toggleThemeButton.addEventListener("click", () => {
   const isLightMode = document.body.classList.toggle("light_mode");
-  localStorage.setItem("themeColor", isLightMode ? "light_mode" : "dark_mode");
-  toggleThemeButton.innerText = isLightMode ? "dark_mode" : "light_mode";
+  localStorage.setItem("themeColor", isLightMode ? "light_mode" : "light_mode");
+  toggleThemeButton.innerText = isLightMode ? "light_mode" : "light_mode";
 });
 
 // Delete all chats from local storage when button is clicked
