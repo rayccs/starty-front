@@ -9,8 +9,9 @@ let userMessage = null;
 let isResponseGenerating = false;
 
 // API configuration
-const API_KEY = "AIzaSyC2id4JRddrF1vki75tu2YoaKlj1H6iRww"; // Your API key here
-const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+// const API_KEY = "AIzaSyC2id4JRddrF1vki75tu2YoaKlj1H6iRww"; // Your API key here
+// const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+const SERVICE_URL = "https://startybot-1.onrender.com/chat";
 
 // Load theme and chat data from local storage on page load
 const loadDataFromLocalstorage = () => {
@@ -58,34 +59,26 @@ const showTypingEffect = (text, textElement, incomingMessageDiv) => {
 
 // Fetch response from the API based on user message
 const generateAPIResponse = async (incomingMessageDiv) => {
-  const textElement = incomingMessageDiv.querySelector(".text"); // Getting text element
+  const textElement = incomingMessageDiv.querySelector(".text");
   try {
-    // Send a POST request to the API with the user's message
-    const response = await fetch(API_URL, {
+    const response = await fetch(SERVICE_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        contents: [
-          {
-            role: "user",
-            parts: [{ text: userMessage }]
-          }
-        ]
+        message: userMessage  // Ahora enviamos {message: "texto"} en lugar del formato Gemini
       })
     });
+    
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error.message);
-
-    // Get the API response text and remove asterisks from it
-    const apiResponse = data.candidates[0].content.parts[0].text.replace(
-      /\*\*(.*?)\*\*/g,
-      "$1"
-    );
-    showTypingEffect(apiResponse, textElement, incomingMessageDiv); // Show typing effect
+    if (!response.ok) throw new Error(data.error || "Error en la respuesta");
+    
+    // Usamos data.response en lugar de data.candidates[0].content.parts[0].text
+    const apiResponse = data.response;
+    showTypingEffect(apiResponse, textElement, incomingMessageDiv);
+    
   } catch (error) {
-    // Handle error
     isResponseGenerating = false;
-    textElement.innerText = error.message;
+    textElement.innerText = "Error: " + error.message;
     textElement.parentElement.closest(".message").classList.add("error");
   } finally {
     incomingMessageDiv.classList.remove("loading");
