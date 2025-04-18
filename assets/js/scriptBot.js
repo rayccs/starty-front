@@ -24,8 +24,7 @@ function initializeChatBot() {
   // State variables
   let userMessage = null;
   let isResponseGenerating = false;
-  const SERVICE_URL = "http://localhost:5000/chat";
-
+  const SERVICE_URL = "https://startybot-1.onrender.com/chat";
   // Load theme and chat data from local storage on page load
   const loadDataFromLocalstorage = () => {
     const savedChats = localStorage.getItem("saved-chats");
